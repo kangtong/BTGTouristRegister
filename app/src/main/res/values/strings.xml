@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">神舟国旅游客登记系统</string>
+    <string name="title_home">主页</string>
+    <string name="title_dashboard">工具箱</string>
+</resources>
