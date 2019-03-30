@@ -5,4 +5,5 @@
     <string name="hello_fragment">您好！\n今天也要辛苦您了！\n\n今天是%tF\n当前时间为%tT\n\n请务必核对时间，点击下面的按钮，来开始接下来的工作吧！</string>
     <string name="title_activity_guide">请选择导游信息</string>
     <string name="select_guide">选择导游信息</string>
+    <string name="none_guide">暂时没有导游信息，\n请点击右下角的按钮来新增导游信息。</string>
 </resources>

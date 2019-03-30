@@ -1,6 +1,7 @@
 package com.kangtong.btgtouristregister.view;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,9 +13,11 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.kangtong.btgtouristregister.R;
+import com.kangtong.btgtouristregister.view.guide.GuideActivity;
 
 import java.util.Date;
 import java.util.Timer;
@@ -27,6 +30,7 @@ import java.util.TimerTask;
 public class MainFragment extends Fragment {
 
     private TextView mTextHello;
+    private Button mBtnSelectGuide;
     private Timer mTimer = new Timer();
     private TimerTask mTimerTask;
     private Handler mHandler = new Handler() {
@@ -59,6 +63,7 @@ public class MainFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mTextHello = view.findViewById(R.id.text_hello);
+        mBtnSelectGuide = view.findViewById(R.id.btn_select_guide);
         mTimerTask = new TimerTask() {
             @Override
             public void run() {
@@ -68,6 +73,12 @@ public class MainFragment extends Fragment {
             }
         };
         mTimer.schedule(mTimerTask, new Date(), 1000);
+        mBtnSelectGuide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), GuideActivity.class));
+            }
+        });
     }
 
 
