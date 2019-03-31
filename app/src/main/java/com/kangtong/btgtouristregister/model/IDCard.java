@@ -1,5 +1,8 @@
 package com.kangtong.btgtouristregister.model;
 
+import android.annotation.SuppressLint;
+
+import org.jetbrains.annotations.NotNull;
 import org.litepal.crud.LitePalSupport;
 
 import java.text.SimpleDateFormat;
@@ -53,7 +56,7 @@ public class IDCard extends LitePalSupport {
     }
 
     public void setBirthday(Date birthday) {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy年MM月dd日");// 设置日期格式
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("yyyy年MM月dd日");// 设置日期格式
         this.birthday = df.format(birthday);
     }
 
@@ -87,5 +90,21 @@ public class IDCard extends LitePalSupport {
 
     public void setStartDate(String startDate) {
         this.startDate = startDate;
+    }
+
+    @NotNull
+    @Override
+    public String toString() {
+        return "IDCard{" +
+                "peopleName='" + peopleName + '\'' +
+                ", sex='" + sex + '\'' +
+                ", ethnic='" + ethnic + '\'' +
+                ", birthday='" + birthday + '\'' +
+                ", address='" + address + '\'' +
+                ", number='" + number + '\'' +
+                ", department='" + department + '\'' +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                '}';
     }
 }

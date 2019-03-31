@@ -2,14 +2,12 @@ package com.kangtong.btgtouristregister.view.guide;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -41,8 +39,9 @@ public class AddGuideActivity extends AppCompatActivity implements Handler.Callb
     static String filepath = "";
     // 展示用的 tv
     private TextView textView = null;
-    // 以下为 kt 加入, 需添注释
+    // 输入昵称
     private EditText editName;
+    // 临时保存信息
     private Guide mGuide;
     // 录入信息的所需的 sdk
     private HsSerialPortSDK sdk = null;
@@ -65,7 +64,7 @@ public class AddGuideActivity extends AppCompatActivity implements Handler.Callb
                 emitter.onError(new Throwable());
             }
         } else {
-            emitter.onError(new Throwable());
+            emitter.onError(new Throwable("对卡失败,请先把卡拿开,再重新读取!"));
         }
     };
 
@@ -80,20 +79,20 @@ public class AddGuideActivity extends AppCompatActivity implements Handler.Callb
     }
 
     private void setupView() {
-        textView = findViewById(R.id.textView);
+        textView = findViewById(R.id.text_name);
         editName = findViewById(R.id.edit_name);
     }
 
     private void setupRead() {
-        Button btnGetIDCard = findViewById(R.id.button);
+        Button btnGetIDCard = findViewById(R.id.btn_guide_get);
         btnGetIDCard.setOnClickListener(v -> onReadCard());
     }
 
-    private void setupSaveInfo(){
+    private void setupSaveInfo() {
         Button btnEnter = findViewById(R.id.btn_enter);
         btnEnter.setOnClickListener(v -> {
-            Guide guide = new Guide();
-            guide = mGuide;
+            new Guide();
+            Guide guide = mGuide;
             guide.setPeopleName(editName.getText().toString());
             guide.save();
             finish();
@@ -223,17 +222,17 @@ public class AddGuideActivity extends AppCompatActivity implements Handler.Callb
             }
             case READER_ID_CARD_SUCCEED: {
                 IDCardInfo ic = (IDCardInfo) msg.obj;
-                Guide guide = new Guide();
-                guide.setPeopleName(ic.getPeopleName());
-                guide.setSex(ic.getSex());
-                guide.setEthnic(ic.getPeople());
-                guide.setBirthday(ic.getBirthDay());
-                guide.setAddress(ic.getAddr());
-                guide.setNumber(ic.getIDCard());
-                guide.setDepartment(ic.getDepartment());
-                guide.setStartDate(ic.getStrartDate());
-                guide.setEndDate(ic.getEndDate());
-                updateText(guide);
+                mGuide = new Guide();
+                mGuide.setPeopleName(ic.getPeopleName());
+                mGuide.setSex(ic.getSex());
+                mGuide.setEthnic(ic.getPeople());
+                mGuide.setBirthday(ic.getBirthDay());
+                mGuide.setAddress(ic.getAddr());
+                mGuide.setNumber(ic.getIDCard());
+                mGuide.setDepartment(ic.getDepartment());
+                mGuide.setStartDate(ic.getStrartDate());
+                mGuide.setEndDate(ic.getEndDate());
+                updateText();
                 result = true;
                 break;
             }
@@ -245,16 +244,8 @@ public class AddGuideActivity extends AppCompatActivity implements Handler.Callb
      * 更新 扫描结果 显示
      */
     @SuppressLint("SetTextI18n")
-    private void updateText(Guide guide) {
-        textView.setText(guide.getPeopleName()
-                + guide.getSex()
-                + guide.getEthnic()
-                + guide.getBirthday()
-                + guide.getAddress()
-                + guide.getNumber()
-                + guide.getDepartment()
-                + guide.getStartDate()
-                + guide.getEndDate());
+    private void updateText() {
+        textView.setText(mGuide.toString());
     }
 
     /**
