@@ -5,17 +5,15 @@ import org.litepal.crud.LitePalSupport;
 import java.util.Date;
 
 public class IDCard extends LitePalSupport {
-    private String peopleName;
-    private String sex;
-    private String ethnic;
-    private String people;
-    private Date birthday;
-    private String address;
-    private String number;
-    private String department;
-    private String startDate;
-
-    private String endDate;
+    private String peopleName;//姓名
+    private String sex;//性别
+    private String ethnic;//民族
+    private Date birthday;//生日
+    private String address;//地址
+    private String number;//身份证号
+    private String department;//公安分局
+    private String startDate;//有效期限开始
+    private String endDate;//有效时间结束
 
     public String getEndDate() {
         return endDate;
@@ -47,14 +45,6 @@ public class IDCard extends LitePalSupport {
 
     public void setEthnic(String ethnic) {
         this.ethnic = ethnic;
-    }
-
-    public String getPeople() {
-        return people;
-    }
-
-    public void setPeople(String people) {
-        this.people = people;
     }
 
     public Date getBirthday() {

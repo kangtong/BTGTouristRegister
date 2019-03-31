@@ -72,7 +72,7 @@ public class AddGuideActivity extends AppCompatActivity {
                     IDCardInfo ic = (IDCardInfo) msg.obj;
                     SimpleDateFormat df = new SimpleDateFormat("yyyy年MM月dd日");// 设置日期格式
                     Guide guide = new Guide();
-                    guide.setNumber(ic.getPeopleName());
+                    guide.setPeopleName(ic.getPeopleName());
                     guide.setSex(ic.getSex());
                     guide.setEthnic(ic.getPeople());
                     guide.setBirthday(ic.getBirthDay());
