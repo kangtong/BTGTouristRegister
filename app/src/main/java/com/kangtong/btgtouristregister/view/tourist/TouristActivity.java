@@ -122,7 +122,12 @@ public class TouristActivity extends AppCompatActivity implements Handler.Callba
 
     private void setupRead() {
         Button btnRead = findViewById(R.id.btn_read);
-        btnRead.setOnClickListener(v -> onReadCard());
+        btnRead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toast("1123");
+            }
+        });
     }
 
     private void setupLoading() {
