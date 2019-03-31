@@ -2,13 +2,16 @@ package com.kangtong.btgtouristregister.view.guide;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +41,9 @@ public class AddGuideActivity extends AppCompatActivity implements Handler.Callb
     static String filepath = "";
     // 展示用的 tv
     private TextView textView = null;
+    // 以下为 kt 加入, 需添注释
+    private EditText editName;
+    private Guide mGuide;
     // 录入信息的所需的 sdk
     private HsSerialPortSDK sdk = null;
     // loading
@@ -69,16 +75,29 @@ public class AddGuideActivity extends AppCompatActivity implements Handler.Callb
         setContentView(R.layout.activity_add_guide);
         setupView();
         setupRead();
+        setupSaveInfo();
         setupLoading();
     }
 
     private void setupView() {
         textView = findViewById(R.id.textView);
+        editName = findViewById(R.id.edit_name);
     }
 
     private void setupRead() {
-        Button button = findViewById(R.id.button);
-        button.setOnClickListener(v -> onReadCard());
+        Button btnGetIDCard = findViewById(R.id.button);
+        btnGetIDCard.setOnClickListener(v -> onReadCard());
+    }
+
+    private void setupSaveInfo(){
+        Button btnEnter = findViewById(R.id.btn_enter);
+        btnEnter.setOnClickListener(v -> {
+            Guide guide = new Guide();
+            guide = mGuide;
+            guide.setPeopleName(editName.getText().toString());
+            guide.save();
+            finish();
+        });
     }
 
     private void setupLoading() {

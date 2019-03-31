@@ -3,13 +3,18 @@
     package="com.kangtong.btgtouristregister">
 
     <application
+        android:name="org.litepal.LitePalApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.guide.AddGuideActivity"></activity>
+        <activity
+            android:name=".view.tourist.TouristActivity"
+            android:label="@string/title_activity_tourist"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".view.guide.AddGuideActivity" />
         <activity
             android:name=".view.guide.GuideActivity"
             android:label="@string/title_activity_guide"
