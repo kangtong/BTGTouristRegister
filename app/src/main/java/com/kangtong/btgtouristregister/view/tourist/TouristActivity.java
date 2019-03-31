@@ -30,9 +30,11 @@ public class TouristActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tourist);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        guideName = getIntent().getStringExtra(EXTRA_GUIDE_NAME);
+        toolbar.setTitle("当前导游：" + guideName);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_done);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -40,9 +42,6 @@ public class TouristActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
-        guideName = getIntent().getStringExtra(EXTRA_GUIDE_NAME);
-        toolbar.setTitle("当前导游：" + guideName);
 
 
     }
