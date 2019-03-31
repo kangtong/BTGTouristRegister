@@ -26,7 +26,7 @@ import java.util.List;
  */
 public class ToolFragment extends Fragment {
 
-    // TODO: Customize parameters
+    // TODO: 查询所有记录、、筛选选项「日期」、「导游」
     private int mColumnCount = 2;
 
     private OnListFragmentInteractionListener mListener;

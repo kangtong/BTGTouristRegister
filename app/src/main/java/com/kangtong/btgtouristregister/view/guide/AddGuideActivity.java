@@ -91,7 +91,6 @@ public class AddGuideActivity extends AppCompatActivity implements Handler.Callb
     private void setupSaveInfo() {
         Button btnEnter = findViewById(R.id.btn_enter);
         btnEnter.setOnClickListener(v -> {
-            new Guide();
             Guide guide = mGuide;
             guide.setPeopleName(editName.getText().toString());
             guide.save();
@@ -222,17 +221,7 @@ public class AddGuideActivity extends AppCompatActivity implements Handler.Callb
             }
             case READER_ID_CARD_SUCCEED: {
                 IDCardInfo ic = (IDCardInfo) msg.obj;
-                mGuide = new Guide();
-                mGuide.setPeopleName(ic.getPeopleName());
-                mGuide.setSex(ic.getSex());
-                mGuide.setEthnic(ic.getPeople());
-                mGuide.setBirthday(ic.getBirthDay());
-                mGuide.setAddress(ic.getAddr());
-                mGuide.setNumber(ic.getIDCard());
-                mGuide.setDepartment(ic.getDepartment());
-                mGuide.setStartDate(ic.getStrartDate());
-                mGuide.setEndDate(ic.getEndDate());
-                updateText();
+                updateText(ic);
                 result = true;
                 break;
             }
@@ -242,10 +231,21 @@ public class AddGuideActivity extends AppCompatActivity implements Handler.Callb
 
     /**
      * 更新 扫描结果 显示
+     * @param ic
      */
     @SuppressLint("SetTextI18n")
-    private void updateText() {
-        textView.setText(mGuide.toString());
+    private void updateText(IDCardInfo ic) {
+        mGuide = new Guide();
+        mGuide.setPeopleName(ic.getPeopleName());
+        mGuide.setSex(ic.getSex());
+        mGuide.setEthnic(ic.getPeople());
+        mGuide.setBirthday(ic.getBirthDay());
+        mGuide.setAddress(ic.getAddr());
+        mGuide.setNumber(ic.getIDCard());
+        mGuide.setDepartment(ic.getDepartment());
+        mGuide.setStartDate(ic.getStrartDate());
+        mGuide.setEndDate(ic.getEndDate());
+        editName.setText(mGuide.getPeopleName());
     }
 
     /**

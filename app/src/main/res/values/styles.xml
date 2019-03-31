@@ -17,4 +17,12 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="Tourist">
+        <item name="android:textColor">@color/icons</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:text">@string/none</item>
+        <item name="android:layout_margin">2dp</item>
+    </style>
+
 </resources>

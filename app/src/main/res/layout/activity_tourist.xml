@@ -38,7 +38,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/read" />
+                        android:layout_margin="8dp"
+                        android:background="@color/colorAccent"
+                        android:text="@string/read"
+                        android:textColor="@color/icons" />
 
                     <ToggleButton
                         android:id="@+id/btn_auto_read"
@@ -46,6 +49,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textOff="@string/auto_read_off"
+                        android:layout_margin="8dp"
+                        android:background="@color/colorAccent"
+                        android:textColor="@color/icons"
                         android:textOn="@string/auto_read_on" />
                 </LinearLayout>
 
@@ -55,51 +61,69 @@
                     android:columnCount="2">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        style="@style/Tourist"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
+                        android:layout_width="match_parent"
                         android:text="@string/name" />
 
                     <TextView
                         android:id="@+id/text_name"
-                        android:layout_width="wrap_content"
+                        style="@style/Tourist"
                         android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:text="@string/none"
+
                         android:layout_columnWeight="1" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        style="@style/Tourist"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
+                        android:layout_width="match_parent"
+
                         android:text="@string/id_card_number" />
 
                     <TextView
                         android:id="@+id/text_number"
-                        android:layout_width="wrap_content"
+                        style="@style/Tourist"
                         android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:text="@string/none"
+
                         android:layout_columnWeight="1" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        style="@style/Tourist"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
+                        android:layout_width="match_parent"
+
                         android:text="@string/sex" />
 
                     <TextView
                         android:id="@+id/text_sex"
-                        android:layout_width="wrap_content"
+                        style="@style/Tourist"
                         android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:text="@string/none"
+
                         android:layout_columnWeight="1" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        style="@style/Tourist"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
+                        android:layout_width="match_parent"
+
                         android:text="@string/birthday" />
 
                     <TextView
                         android:id="@+id/text_birthday"
-                        android:layout_width="wrap_content"
+                        style="@style/Tourist"
                         android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:text="@string/none"
                         android:layout_columnWeight="1" />
                 </GridLayout>
             </LinearLayout>

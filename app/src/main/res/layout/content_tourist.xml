@@ -8,12 +8,6 @@
     tools:context=".view.tourist.TouristActivity"
     tools:showIn="@layout/activity_tourist">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:text="@string/large_text" />
-
     <ListView
         android:id="@+id/list_tourist"
         android:layout_width="match_parent"

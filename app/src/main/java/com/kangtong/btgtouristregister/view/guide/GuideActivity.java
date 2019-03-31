@@ -42,7 +42,6 @@ public class GuideActivity extends AppCompatActivity {
         textNoneGuide = findViewById(R.id.text_none_guide);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        addGuide();
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,13 +71,5 @@ public class GuideActivity extends AppCompatActivity {
         ArrayAdapter<String> mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, guideNameList);
         listGuide.setAdapter(mAdapter);
 
-    }
-
-    private void addGuide() {
-        for (int i = 0; i < 20; i++) {
-            Guide guide = new Guide();
-            guide.setPeopleName("小明" + i + "号");
-            guide.save();
-        }
     }
 }
