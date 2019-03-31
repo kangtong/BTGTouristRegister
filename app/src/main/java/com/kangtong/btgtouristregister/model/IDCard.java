@@ -15,6 +15,16 @@ public class IDCard extends LitePalSupport {
     private String department;
     private String startDate;
 
+    private String endDate;
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
     public String getPeopleName() {
         return peopleName;
     }

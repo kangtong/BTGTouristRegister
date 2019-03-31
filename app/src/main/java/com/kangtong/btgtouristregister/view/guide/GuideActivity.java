@@ -1,5 +1,6 @@
 package com.kangtong.btgtouristregister.view.guide;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -12,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.kangtong.btgtouristregister.R;
+import com.kangtong.btgtouristregister.model.Guide;
 
 import java.util.Objects;
 
@@ -30,6 +32,7 @@ public class GuideActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                startActivity(new Intent(GuideActivity.this, AddGuideActivity.class));
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
