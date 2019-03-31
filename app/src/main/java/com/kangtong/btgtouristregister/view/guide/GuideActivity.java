@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.kangtong.btgtouristregister.R;
 import com.kangtong.btgtouristregister.model.Guide;
+import com.kangtong.btgtouristregister.view.tourist.TouristActivity;
 
 import org.litepal.LitePal;
 import org.litepal.crud.LitePalSupport;
@@ -53,8 +54,7 @@ public class GuideActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String string = ((TextView) view).getText().toString();
-                Snackbar.make(view, string, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                TouristActivity.start(GuideActivity.this, string);
             }
         });
 
