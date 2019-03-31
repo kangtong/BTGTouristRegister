@@ -3,8 +3,6 @@ package com.kangtong.btgtouristregister.view.guide;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,6 +12,7 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,10 +22,7 @@ import com.kangtong.btgtouristregister.R;
 import com.kangtong.btgtouristregister.model.Guide;
 import com.kangtong.btgtouristregister.util.HsUtlis;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 
 public class AddGuideActivity extends AppCompatActivity {
 
@@ -37,10 +33,11 @@ public class AddGuideActivity extends AppCompatActivity {
     private static final int READER_IDCARD_SUCCEED = 1;
     private static final int PHOTO_SUCCEED = 2;
     static String filepath = "";
-    private TextView textView;
-    private Button button;
+    private TextView textName;
+    private EditText editName;
     private HsSerialPortSDK sdk;
     private ProgressDialog mProgressDialog;
+    private Guide mGuide;
 
     public Handler mHandler = new Handler() {
         @Override
@@ -70,39 +67,49 @@ public class AddGuideActivity extends AppCompatActivity {
                 }
                 case READER_IDCARD_SUCCEED: {
                     IDCardInfo ic = (IDCardInfo) msg.obj;
-                    SimpleDateFormat df = new SimpleDateFormat("yyyy年MM月dd日");// 设置日期格式
-                    Guide guide = new Guide();
-                    guide.setPeopleName(ic.getPeopleName());
-                    guide.setSex(ic.getSex());
-                    guide.setEthnic(ic.getPeople());
-                    guide.setBirthday(ic.getBirthDay());
-                    guide.setAddress(ic.getAddr());
-                    guide.setNumber(ic.getIDCard());
-                    guide.setDepartment(ic.getDepartment());
-                    guide.setStartDate(ic.getStrartDate());
-                    guide.setEndDate(ic.getEndDate());
-                    updateText(guide);
+
+                    updateText(ic);
                     break;
                 }
             }
         }
     };
 
-    private void updateText(Guide guide) {
-        textView.setText(guide.getPeopleName() + guide.getSex() + guide.getEthnic() + guide.getBirthday() + guide.getAddress() + guide.getNumber() + guide.getDepartment() + guide.getStartDate() + guide.getEndDate());
-
+    private void updateText(IDCardInfo ic) {
+        mGuide.setPeopleName(ic.getPeopleName());
+        mGuide.setSex(ic.getSex());
+        mGuide.setEthnic(ic.getPeople());
+        mGuide.setBirthday(ic.getBirthDay());
+        mGuide.setAddress(ic.getAddr());
+        mGuide.setNumber(ic.getIDCard());
+        mGuide.setDepartment(ic.getDepartment());
+        mGuide.setStartDate(ic.getStrartDate());
+        mGuide.setEndDate(ic.getEndDate());
+        editName.setText(mGuide.getPeopleName());
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_guide);
-        textView = findViewById(R.id.textView);
-        button = findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
+        textName = findViewById(R.id.text_name);
+        editName = findViewById(R.id.edit_name);
+        Button btnGetIDCard = findViewById(R.id.btn_guide_get);
+        btnGetIDCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new IDCardTask().execute();
+            }
+        });
+        Button btnEnter = findViewById(R.id.btn_enter);
+        btnEnter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Guide guide = new Guide();
+                guide = mGuide;
+                guide.setPeopleName(editName.getText().toString());
+                guide.save();
+                finish();
             }
         });
         mProgressDialog = new ProgressDialog(this);

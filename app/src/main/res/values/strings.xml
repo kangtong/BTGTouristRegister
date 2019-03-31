@@ -6,4 +6,8 @@
     <string name="title_activity_guide">请选择导游信息</string>
     <string name="select_guide">选择导游信息</string>
     <string name="none_guide">暂时没有导游信息，\n请点击右下角的按钮来新增导游信息。</string>
+    <string name="name">姓名：</string>
+    <string name="edit_name">请读取身份证信息或手动输入</string>
+    <string name="guide_get">读取身份证信息</string>
+    <string name="ok">确定</string>
 </resources>

@@ -2,13 +2,14 @@ package com.kangtong.btgtouristregister.model;
 
 import org.litepal.crud.LitePalSupport;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class IDCard extends LitePalSupport {
     private String peopleName;//姓名
     private String sex;//性别
     private String ethnic;//民族
-    private Date birthday;//生日
+    private String birthday;//生日
     private String address;//地址
     private String number;//身份证号
     private String department;//公安分局
@@ -47,12 +48,13 @@ public class IDCard extends LitePalSupport {
         this.ethnic = ethnic;
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
     public void setBirthday(Date birthday) {
-        this.birthday = birthday;
+        SimpleDateFormat df = new SimpleDateFormat("yyyy年MM月dd日");// 设置日期格式
+        this.birthday = df.format(birthday);
     }
 
     public String getAddress() {
