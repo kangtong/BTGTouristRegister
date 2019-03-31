@@ -36,6 +36,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.1.0-alpha01'
     implementation 'androidx.navigation:navigation-ui:2.1.0-alpha01'
     implementation 'org.litepal.android:java:3.0.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.8'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.2-alpha02'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0-alpha02'
