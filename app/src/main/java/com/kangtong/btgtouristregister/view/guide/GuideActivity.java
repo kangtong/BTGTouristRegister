@@ -57,6 +57,12 @@ public class GuideActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         List<Guide> guideList = LitePal.findAll(Guide.class);
         List<String> guideNameList = new ArrayList<>();
         for (Guide guide :
@@ -70,6 +76,5 @@ public class GuideActivity extends AppCompatActivity {
         }
         ArrayAdapter<String> mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, guideNameList);
         listGuide.setAdapter(mAdapter);
-
     }
 }
