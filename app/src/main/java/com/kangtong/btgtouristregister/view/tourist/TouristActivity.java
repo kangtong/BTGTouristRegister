@@ -24,6 +24,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -32,12 +33,18 @@ import android.widget.Toast;
 import com.huashi.serialport.sdk.HsSerialPortSDK;
 import com.huashi.serialport.sdk.IDCardInfo;
 import com.kangtong.btgtouristregister.R;
+import com.kangtong.btgtouristregister.model.Guide;
 import com.kangtong.btgtouristregister.model.Tourist;
+import com.kangtong.btgtouristregister.util.DateUtil;
 import com.kangtong.btgtouristregister.util.HsUtlis;
 import com.kangtong.btgtouristregister.view.guide.RetryWithDelay;
 
+import org.litepal.LitePal;
+
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class TouristActivity extends AppCompatActivity implements Handler.Callback {
 
@@ -50,6 +57,8 @@ public class TouristActivity extends AppCompatActivity implements Handler.Callba
     static String filepath = "";
     private ListView listTourist;
     private TextView textNoneTourist;
+    List<String> touristString = new ArrayList<>();//导游信息
+    private ArrayAdapter<String> mAdapter;
 
     public static void start(Context context, String guideName) {
         Intent intent = new Intent(context, TouristActivity.class);
@@ -102,9 +111,10 @@ public class TouristActivity extends AppCompatActivity implements Handler.Callba
             }
         });
         setupView();
-        setupRead();
+        setupList();
         setupLoading();
     }
+
 
     private void setupView() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -118,16 +128,31 @@ public class TouristActivity extends AppCompatActivity implements Handler.Callba
         mTextBirthday = findViewById(R.id.text_birthday);
         listTourist = findViewById(R.id.list_tourist);
         textNoneTourist = findViewById(R.id.text_none_tourist);
-    }
 
-    private void setupRead() {
         Button btnRead = findViewById(R.id.btn_read);
         btnRead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toast("1123");
+                onReadCard();
             }
         });
+        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, touristString);
+        listTourist.setAdapter(mAdapter);
+    }
+
+    private void setupList() {
+        List<Tourist> touristList = LitePal.where("guideName=? AND addTime=?", guideName, DateUtil.formatDate(new Date())).order("id desc").find(Tourist.class);
+        touristString.clear();
+        for (Tourist tourist :
+                touristList) {
+            touristString.add(tourist.getPeopleName() + "   " + tourist.getNumber());
+        }
+        if (touristString.isEmpty()) {
+            textNoneTourist.setVisibility(View.VISIBLE);
+        } else {
+            textNoneTourist.setVisibility(View.INVISIBLE);
+        }
+        mAdapter.notifyDataSetChanged();
     }
 
     private void setupLoading() {
@@ -278,6 +303,7 @@ public class TouristActivity extends AppCompatActivity implements Handler.Callba
         mTextNumber.setText(tourist.getNumber());
         mTextSex.setText(tourist.getSex());
         mTextBirthday.setText(tourist.getBirthday());
+        setupList();
     }
 
     /**
