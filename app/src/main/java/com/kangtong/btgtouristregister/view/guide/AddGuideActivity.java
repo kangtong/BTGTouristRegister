@@ -91,7 +91,10 @@ public class AddGuideActivity extends AppCompatActivity implements Handler.Callb
     private void setupSaveInfo() {
         Button btnEnter = findViewById(R.id.btn_enter);
         btnEnter.setOnClickListener(v -> {
-            Guide guide = mGuide;
+            Guide guide = new Guide();
+            if (mGuide != null) {
+                guide = mGuide;
+            }
             guide.setPeopleName(editName.getText().toString());
             guide.save();
             finish();

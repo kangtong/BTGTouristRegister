@@ -5,28 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:orientation="vertical"
     tools:context=".view.tourist.TouristActivity">
-
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height"
-        android:fitsSystemWindows="true"
+        android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:toolbarId="@+id/toolbar">
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            />
 
+    </com.google.android.material.appbar.AppBarLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                >
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -39,7 +39,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_margin="8dp"
-                        android:background="@color/colorAccent"
                         android:text="@string/read"
                         android:textColor="@color/icons" />
 
@@ -50,7 +49,6 @@
                         android:layout_weight="1"
                         android:textOff="@string/auto_read_off"
                         android:layout_margin="8dp"
-                        android:background="@color/colorAccent"
                         android:textColor="@color/icons"
                         android:textOn="@string/auto_read_on" />
                 </LinearLayout>
@@ -58,7 +56,9 @@
                 <GridLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:columnCount="2">
+                    android:background="@color/primary_light"
+                    android:columnCount="2"
+                    >
 
                     <TextView
                         style="@style/Tourist"
@@ -126,28 +126,18 @@
                         android:text="@string/none"
                         android:layout_columnWeight="1" />
                 </GridLayout>
+
+                <include layout="@layout/content_tourist"/>
+
             </LinearLayout>
 
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <include layout="@layout/content_tourist" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_done"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
-        app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|end"
+        android:layout_gravity="bottom|end"
         app:srcCompat="@drawable/ic_action_done" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
