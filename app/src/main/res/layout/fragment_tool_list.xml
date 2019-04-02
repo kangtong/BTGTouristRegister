@@ -5,6 +5,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- 搜索选项 -->
+    <androidx.appcompat.widget.ButtonBarLayout
+        android:id="@+id/ll_query_type"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            style="@style/tool_frg_top_tab_style"
+            android:tag="1"
+            android:text="@string/query_all" />
+
+        <Button
+            style="@style/tool_frg_top_tab_style"
+            android:tag="2"
+            android:text="@string/query_by_date" />
+
+        <Button
+            style="@style/tool_frg_top_tab_style"
+            android:tag="3"
+            android:text="@string/query_by_guide" />
+    </androidx.appcompat.widget.ButtonBarLayout>
+
+    <!-- 列表展示 -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_tourist_table_information"
         android:layout_width="0dp"
@@ -14,9 +41,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_query_type"
         tools:listitem="@layout/fragment_tool" />
 
+    <!-- 数据导出表 -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_print"
         android:layout_width="wrap_content"
