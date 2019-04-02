@@ -23,4 +23,6 @@
     <string name="query_all">全部</string>
     <string name="query_by_date">按日期</string>
     <string name="query_by_guide">按导游</string>
+    <string name="excel_loading">正在导出中……</string>
+    <string name="share">分享</string>
 </resources>

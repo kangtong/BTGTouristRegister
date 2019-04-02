@@ -37,6 +37,7 @@ import com.kangtong.btgtouristregister.model.Guide;
 import com.kangtong.btgtouristregister.model.Tourist;
 import com.kangtong.btgtouristregister.util.DateUtil;
 import com.kangtong.btgtouristregister.util.HsUtlis;
+import com.kangtong.btgtouristregister.view.excel.ExcelActivity;
 import com.kangtong.btgtouristregister.view.guide.RetryWithDelay;
 
 import org.litepal.LitePal;
@@ -102,14 +103,7 @@ public class TouristActivity extends AppCompatActivity implements Handler.Callba
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tourist);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_done);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
         setupView();
         setupList();
         setupLoading();
@@ -134,6 +128,14 @@ public class TouristActivity extends AppCompatActivity implements Handler.Callba
             @Override
             public void onClick(View v) {
                 onReadCard();
+            }
+        });
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_done);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ExcelActivity.start(TouristActivity.this, guideName, DateUtil.formatDate(new Date()));
             }
         });
         mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, touristString);
