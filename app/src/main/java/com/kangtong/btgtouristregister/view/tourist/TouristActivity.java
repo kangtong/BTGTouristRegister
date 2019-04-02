@@ -26,9 +26,11 @@ import android.os.SystemClock;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.huashi.serialport.sdk.HsSerialPortSDK;
 import com.huashi.serialport.sdk.IDCardInfo;
@@ -46,6 +48,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class TouristActivity extends AppCompatActivity implements Handler.Callback {
 
@@ -69,6 +73,7 @@ public class TouristActivity extends AppCompatActivity implements Handler.Callba
 
     private TextView mTextName;
     private TextView mTextNumber;
+    private ToggleButton mTbnAutoRead;
 
 
     //下面是关于读卡的内容
@@ -103,7 +108,6 @@ public class TouristActivity extends AppCompatActivity implements Handler.Callba
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tourist);
-
         setupView();
         setupList();
         setupLoading();
@@ -128,6 +132,26 @@ public class TouristActivity extends AppCompatActivity implements Handler.Callba
             @Override
             public void onClick(View v) {
                 onReadCard();
+            }
+        });
+        Timer timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                onReadCard();
+            }
+        };
+        mTbnAutoRead = findViewById(R.id.btn_auto_read);
+        mTbnAutoRead.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    btnRead.setEnabled(false);
+                    timer.schedule(timerTask, 3000, 4000);
+                } else {
+                    btnRead.setEnabled(true);
+                    timer.cancel();
+                }
             }
         });
 
