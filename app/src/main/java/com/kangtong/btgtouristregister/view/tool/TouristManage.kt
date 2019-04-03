@@ -38,7 +38,7 @@ class TouristManage private constructor() {
     fun queryByGuide(guide: String, result: (list: MutableList<Tourist>) -> Unit) {
         // TODO - DQ - 2019/4/2 : 这里会有崩溃, 是因为表数据没有该列
         // no such column: guide (Sqlite code 1): , while compiling: SELECT * FROM tourist WHERE guide = ?, (OS error - 2:No such file or directory)
-        LitePal.where("guide = ?", guide)
+        LitePal.where("guideName = ?", guide)
                 .findAsync(Tourist::class.java)
                 .listen {
                     result(it)
@@ -48,7 +48,7 @@ class TouristManage private constructor() {
     fun queryByDate(date: String, result: (list: MutableList<Tourist>) -> Unit) {
         // TODO - DQ - 2019/4/2 : 这里会有崩溃, 是因为表数据没有该列
         // no such column: guide (Sqlite code 1): , while compiling: SELECT * FROM tourist WHERE date = ?, (OS error - 2:No such file or directory)
-        LitePal.where("date = ?", date)
+        LitePal.where("addTime = ?", date)
                 .findAsync(Tourist::class.java)
                 .listen {
                     result(it)
@@ -60,5 +60,11 @@ class TouristManage private constructor() {
                 .listen {
                     result(it)
                 }
+    }
+
+    fun query(guideName: String, date: String, result: (list: MutableList<Tourist>) -> Unit) {
+        LitePal.where("addTime LIKE '%$date%' AND guideName LIKE '%$guideName%'").findAsync(Tourist::class.java).listen {
+            result(it)
+        }
     }
 }

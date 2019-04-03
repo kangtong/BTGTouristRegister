@@ -60,7 +60,7 @@ public class ExcelActivity extends AppCompatActivity implements View.OnClickList
                 .setDataBase(getDatabasePath("btg.db").getPath()) //必须。 小提示：内部数据库可以通过 context.getDatabasePath("internal.db").getPath() 获取。
 
                 .setSQL("select addTime as '登记日期', guideName as '导游姓名', peopleName as '姓名', sex as '性别(男、女)', number as '证件号码', birthday as '出生日期' " +
-                        "from tourist where guideName like '%" + mGuideName + "%' AND addTime='" + mDate + "'")
+                        "from tourist where guideName like '%" + mGuideName + "%' AND addTime LIKE '%" + mDate + "%'")
 //                .setTables(table1, table2) //可选, 如果不设置，则默认导出全部表。
                 .setOutputPath(filePath) //可选, 如果不设置，默认输出路径为 app ExternalFilesDir。
                 .setOutputFileName("(" + mDate + ")" + mGuideName + " 游客信息.xls") //可选, 如果不设置，输出的文件名为 xxx.db.xls。

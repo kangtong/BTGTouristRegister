@@ -11,14 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:orientation="horizontal"
+        android:background="@color/divider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <Button
-            style="@style/tool_frg_top_tab_style"
-            android:tag="1"
-            android:text="@string/query_all" />
 
         <Button
             style="@style/tool_frg_top_tab_style"
@@ -29,6 +25,12 @@
             style="@style/tool_frg_top_tab_style"
             android:tag="3"
             android:text="@string/query_by_guide" />
+
+        <Button
+            style="@style/tool_frg_top_tab_style"
+            android:tag="1"
+            android:text="@string/query_all" />
+
     </androidx.appcompat.widget.ButtonBarLayout>
 
     <!-- 列表展示 -->

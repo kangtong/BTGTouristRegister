@@ -47,8 +47,8 @@ class MyToolAdapter(
         @SuppressLint("SetTextI18n")
         fun bind(item: Tourist) {
             item.run {
-                mView.tv_guide.text = "所属导游"
-                mView.tv_date.text = "跟团日期"
+                mView.tv_guide.text = guideName
+                mView.tv_date.text = addTime
                 mView.tv_tourist.text = "游客姓名: $peopleName"
                 mView.root_view.setOnClickListener {
                     it.context.toast("点击了 $peopleName 这一项")
