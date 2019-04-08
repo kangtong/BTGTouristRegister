@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +32,7 @@ public class ExcelActivity extends AppCompatActivity implements View.OnClickList
     private ProgressBar mIndeterminateBar;
     private TextView mTextLoading;
     private Button mBtnShare;
+    private ImageView mImageView;
 
     public static void start(Context context, String guideName, String date) {
         Intent intent = new Intent(context, ExcelActivity.class);
@@ -49,6 +51,7 @@ public class ExcelActivity extends AppCompatActivity implements View.OnClickList
         mIndeterminateBar = findViewById(R.id.indeterminateBar);
         mTextLoading = findViewById(R.id.text_loading);
         mBtnShare = findViewById(R.id.btn_share);
+        mImageView = findViewById(R.id.imageView);
         mBtnShare.setOnClickListener(this);
         String filePath = Environment.getExternalStorageDirectory() + "/游客记录";
         File destDir = new File(filePath);
@@ -80,6 +83,7 @@ public class ExcelActivity extends AppCompatActivity implements View.OnClickList
                         mIndeterminateBar.setVisibility(View.GONE);
                         mTextLoading.setText("文件导出成功，文件创建在：" + filePath);
                         mFilePath = filePath;
+                        mImageView.setVisibility(View.VISIBLE);
                     }
 
                     @Override
@@ -87,6 +91,7 @@ public class ExcelActivity extends AppCompatActivity implements View.OnClickList
                         mBtnShare.setEnabled(true);
                         mIndeterminateBar.setVisibility(View.GONE);
                         mTextLoading.setText(e.getMessage());
+                        mImageView.setVisibility(View.INVISIBLE);
                     }
                 }); // 或者使用 .start() 同步方法。
     }
