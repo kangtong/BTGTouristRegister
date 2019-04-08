@@ -33,9 +33,6 @@ class ToolFragment : Fragment() {
         }
     }
 
-    @Retention(AnnotationRetention.SOURCE)
-    annotation class QueryType
-
     private val mAdapter = MyToolAdapter()
 
     private var mGuideName = ""

@@ -324,7 +324,12 @@ public class TouristActivity extends AppCompatActivity implements Handler.Callba
         tourist.setEndDate(ic.getEndDate());
         tourist.setAddTime(new Date());
         tourist.setGuideName(guideName);
-        tourist.save();
+        List<Tourist> touristList = LitePal.where("guideName=? AND addTime=? AND number=?", guideName, DateUtil.formatDate(new Date()), tourist.getNumber()).order("id desc").find(Tourist.class);
+        if (touristList.isEmpty()) {
+            tourist.save();
+        } else {
+            Toast.makeText(this, "该身份证信息已录入", Toast.LENGTH_LONG).show();
+        }
         mTextName.setText(tourist.getPeopleName());
         mTextNumber.setText(tourist.getNumber());
         mTextSex.setText(tourist.getSex());
