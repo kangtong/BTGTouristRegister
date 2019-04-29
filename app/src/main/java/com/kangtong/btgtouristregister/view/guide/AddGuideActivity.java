@@ -6,7 +6,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.IPowerManager;
 import android.os.Message;
+import android.os.RemoteException;
+import android.os.ServiceManager;
 import android.os.SystemClock;
 import android.widget.Button;
 import android.widget.EditText;
@@ -51,6 +54,8 @@ public class AddGuideActivity extends AppCompatActivity implements Handler.Callb
     private Handler mHandler = new Handler(this);
     // 正在读卡
     private Disposable reading = null;
+    private IPowerManager mPower;
+
     // 读卡
     private FlowableOnSubscribe<IDCardInfo> mReadCardObs = emitter -> {
         // 初始初始化
@@ -72,6 +77,7 @@ public class AddGuideActivity extends AppCompatActivity implements Handler.Callb
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_guide);
+        mPower = IPowerManager.Stub.asInterface(ServiceManager.getService("power"));
         setupView();
         setupRead();
         setupSaveInfo();
@@ -132,9 +138,10 @@ public class AddGuideActivity extends AppCompatActivity implements Handler.Callb
 
                 int version = Build.VERSION.SDK_INT;
                 if (version == 22) {
-                    int r = HsUtlis.IDCardPonwer2();
-                    if (r != 1) {
-                        toast("上电失败");
+                    try {
+                        mPower.SetCardPower(1);
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
                     }
                 } else {
                     try {

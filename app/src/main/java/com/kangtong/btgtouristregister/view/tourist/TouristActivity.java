@@ -6,22 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import io.reactivex.BackpressureStrategy;
-import io.reactivex.Flowable;
-import io.reactivex.FlowableOnSubscribe;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
-
 import android.os.Environment;
 import android.os.Handler;
+import android.os.IPowerManager;
 import android.os.Message;
+import android.os.RemoteException;
+import android.os.ServiceManager;
 import android.os.SystemClock;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -32,10 +22,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.huashi.serialport.sdk.HsSerialPortSDK;
 import com.huashi.serialport.sdk.IDCardInfo;
 import com.kangtong.btgtouristregister.R;
-import com.kangtong.btgtouristregister.model.Guide;
 import com.kangtong.btgtouristregister.model.Tourist;
 import com.kangtong.btgtouristregister.util.DateUtil;
 import com.kangtong.btgtouristregister.util.HsUtlis;
@@ -51,6 +41,15 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
+import io.reactivex.FlowableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+
 public class TouristActivity extends AppCompatActivity implements Handler.Callback {
 
     private static final String EXTRA_GUIDE_NAME = "extra_guide_name";
@@ -64,6 +63,7 @@ public class TouristActivity extends AppCompatActivity implements Handler.Callba
     private TextView textNoneTourist;
     List<String> touristString = new ArrayList<>();//导游信息
     private ArrayAdapter<String> mAdapter;
+    private IPowerManager mPower;
 
     public static void start(Context context, String guideName) {
         Intent intent = new Intent(context, TouristActivity.class);
@@ -108,6 +108,7 @@ public class TouristActivity extends AppCompatActivity implements Handler.Callba
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tourist);
+        mPower = IPowerManager.Stub.asInterface(ServiceManager.getService("power"));
         setupView();
         setupList();
         setupLoading();
@@ -205,9 +206,10 @@ public class TouristActivity extends AppCompatActivity implements Handler.Callba
 
                 int version = Build.VERSION.SDK_INT;
                 if (version == 22) {
-                    int r = HsUtlis.IDCardPonwer2();
-                    if (r != 1) {
-                        toast("上电失败");
+                    try {
+                        mPower.SetCardPower(1);
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
                     }
                 } else {
                     try {

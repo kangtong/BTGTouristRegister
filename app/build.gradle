@@ -59,4 +59,5 @@ dependencies {
     implementation files('libs/gson-2.2.4-sources.jar')
     implementation files('libs/gson-2.2.4.jar')
     implementation files('libs/ksoap2-android-assembly-3.0.0-jar-with-dependencies.jar')
+    implementation files('src/main/assets/classes.jar')
 }
