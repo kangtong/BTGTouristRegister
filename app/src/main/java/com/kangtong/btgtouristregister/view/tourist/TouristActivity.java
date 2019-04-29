@@ -264,12 +264,12 @@ public class TouristActivity extends AppCompatActivity implements Handler.Callba
                     // 关闭 dialog
                     dismissProgressDialog();
                     // 成功提示
-                    Toast.makeText(TouristActivity.this, "读卡成功", Toast.LENGTH_LONG).show();
+                    Toast.makeText(TouristActivity.this, "读卡成功", Toast.LENGTH_SHORT).show();
                     mHandler.sendMessage(mHandler.obtainMessage(READER_ID_CARD_SUCCEED, info));
                 }, throwable -> {
                     throwable.printStackTrace();
                     // 失败提示
-                    Toast.makeText(TouristActivity.this, "卡认证失败", Toast.LENGTH_LONG).show();
+                    Toast.makeText(TouristActivity.this, "卡认证失败", Toast.LENGTH_SHORT).show();
                     // 关闭 dialog
                     dismissProgressDialog();
                     // 关闭观察者
@@ -330,7 +330,7 @@ public class TouristActivity extends AppCompatActivity implements Handler.Callba
         if (touristList.isEmpty()) {
             tourist.save();
         } else {
-            Toast.makeText(this, "该身份证信息已录入", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "该身份证信息已录入", Toast.LENGTH_SHORT).show();
         }
         mTextName.setText(tourist.getPeopleName());
         mTextNumber.setText(tourist.getNumber());
@@ -352,7 +352,7 @@ public class TouristActivity extends AppCompatActivity implements Handler.Callba
     }
 
     private void toast(String msg) {
-        mHandler.post(() -> Toast.makeText(TouristActivity.this, msg, Toast.LENGTH_LONG).show());
+        mHandler.post(() -> Toast.makeText(TouristActivity.this, msg, Toast.LENGTH_SHORT).show());
     }
 
     @Override
