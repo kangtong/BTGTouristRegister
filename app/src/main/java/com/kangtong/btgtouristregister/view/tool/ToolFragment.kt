@@ -6,12 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.IntDef
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kangtong.btgtouristregister.R
 import com.kangtong.btgtouristregister.model.Tourist
-import com.kangtong.btgtouristregister.view.excel.ExcelActivity
+import com.kangtong.btgtouristregister.view.util.ChooseDialog
 import kotlinx.android.synthetic.main.fragment_tool_list.*
 
 /**
@@ -49,7 +48,7 @@ class ToolFragment : Fragment() {
 
     private fun setupView() {
         context?.run {
-            fab_print.setOnClickListener { ExcelActivity.start(this, mGuideName, mDate) }
+            fab_print.setOnClickListener { ChooseDialog.createDialog(this, mGuideName, mDate).show() }
             recycler_tourist_table_information.layoutManager = LinearLayoutManager(this)
             recycler_tourist_table_information.adapter = mAdapter
         }

@@ -25,4 +25,8 @@
     <string name="query_by_guide">按导游</string>
     <string name="excel_loading">正在导出中……</string>
     <string name="share">分享</string>
+    <string-array name="excel_choice">
+        <item>导出为电子行程单</item>
+        <item>导出为八达岭门票模板</item>
+    </string-array>
 </resources>

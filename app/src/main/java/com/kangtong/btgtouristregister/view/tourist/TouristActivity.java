@@ -22,6 +22,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.huashi.serialport.sdk.HsSerialPortSDK;
 import com.huashi.serialport.sdk.IDCardInfo;
@@ -29,8 +32,8 @@ import com.kangtong.btgtouristregister.R;
 import com.kangtong.btgtouristregister.model.Tourist;
 import com.kangtong.btgtouristregister.util.DateUtil;
 import com.kangtong.btgtouristregister.util.HsUtlis;
-import com.kangtong.btgtouristregister.view.excel.ExcelActivity;
 import com.kangtong.btgtouristregister.view.guide.RetryWithDelay;
+import com.kangtong.btgtouristregister.view.util.ChooseDialog;
 
 import org.litepal.LitePal;
 
@@ -41,8 +44,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.FlowableOnSubscribe;
@@ -160,8 +161,9 @@ public class TouristActivity extends AppCompatActivity implements Handler.Callba
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ExcelActivity.start(TouristActivity.this, guideName, DateUtil.formatDate(new Date()));
+                ChooseDialog.createDialog(TouristActivity.this, guideName, DateUtil.formatDate(new Date())).show();
             }
+
         });
         mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, touristString);
         listTourist.setAdapter(mAdapter);
@@ -326,6 +328,9 @@ public class TouristActivity extends AppCompatActivity implements Handler.Callba
         tourist.setEndDate(ic.getEndDate());
         tourist.setAddTime(new Date());
         tourist.setGuideName(guideName);
+        tourist.setDocumentType("身份证");
+        tourist.setTicketType(getType(ic.getBirthDay()));
+
         List<Tourist> touristList = LitePal.where("guideName=? AND addTime=? AND number=?", guideName, DateUtil.formatDate(new Date()), tourist.getNumber()).order("id desc").find(Tourist.class);
         if (touristList.isEmpty()) {
             tourist.save();
@@ -337,6 +342,11 @@ public class TouristActivity extends AppCompatActivity implements Handler.Callba
         mTextSex.setText(tourist.getSex());
         mTextBirthday.setText(tourist.getBirthday());
         setupList();
+    }
+
+    private String getType(Date birthDay) {
+        // TODO: 2019/5/20 还没写自动判断年龄返回类型
+        return null;
     }
 
     /**
