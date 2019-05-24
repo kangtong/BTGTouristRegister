@@ -39,6 +39,7 @@ import org.litepal.LitePal;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Timer;
@@ -329,7 +330,7 @@ public class TouristActivity extends AppCompatActivity implements Handler.Callba
         tourist.setAddTime(new Date());
         tourist.setGuideName(guideName);
         tourist.setDocumentType("身份证");
-        tourist.setTicketType(getType(ic.getBirthDay()));
+        tourist.setTicketType(getType(ic.getBirthDay(), ic.getIDCard()));
 
         List<Tourist> touristList = LitePal.where("guideName=? AND addTime=? AND number=?", guideName, DateUtil.formatDate(new Date()), tourist.getNumber()).order("id desc").find(Tourist.class);
         if (touristList.isEmpty()) {
@@ -344,9 +345,31 @@ public class TouristActivity extends AppCompatActivity implements Handler.Callba
         setupList();
     }
 
-    private String getType(Date birthDay) {
-        // TODO: 2019/5/20 还没写自动判断年龄返回类型
-        return null;
+    private String getType(Date birthDay, String idcard) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.roll(Calendar.YEAR, -6);
+        Date child = calendar.getTime();
+        calendar = Calendar.getInstance();
+        calendar.roll(Calendar.YEAR, -18);
+        Date minor = calendar.getTime();
+        calendar = Calendar.getInstance();
+        calendar.roll(Calendar.YEAR, -60);
+        Date adult = calendar.getTime();
+        calendar = Calendar.getInstance();
+        calendar.roll(Calendar.YEAR, -65);
+        Date old = calendar.getTime();
+        if (idcard.startsWith("110") && old.after(birthDay)) {//大于65岁并且是北京户籍
+            return "老人免费票";
+        } else if (adult.after(birthDay)) {//大于60岁
+            return "老人优惠票（旺季）";
+        } else if (child.before(birthDay)) {//小于6岁
+            return "免票";
+        } else if (child.after(birthDay) && minor.before(birthDay)) {
+            //大于6岁但是小于18岁
+            return "未成年人票（旺季）";
+        } else {
+            return "成人票（旺季）";
+        }
     }
 
     /**

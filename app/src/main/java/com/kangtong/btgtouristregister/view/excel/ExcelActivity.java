@@ -57,14 +57,17 @@ public class ExcelActivity extends AppCompatActivity implements View.OnClickList
         mBtnShare.setOnClickListener(this);
         String sql = "select addTime as '登记日期', guideName as '导游姓名', peopleName as '姓名', sex as '性别(男、女)', number as '证件号码', birthday as '出生日期' " +
                 "from tourist where guideName like '%" + mGuideName + "%' AND addTime LIKE '%" + mDate + "%'";
+        String fileName = "(" + mDate + ")" + mGuideName + " 游客信息.xls";
         switch (mType) {
             case TouristExportType.ITINERARY:
-                sql = "select addTime as '登记日期', guideName as '导游姓名', peopleName as '姓名', sex as '性别(男、女)', number as '证件号码', birthday as '出生日期' " +
+                sql = "select addTime as '登记日期', guideName as '导游姓名', peopleName as '姓名', sex as '性别(男、女)',documentType as '证件类型(身份证、护照、台湾通行证、港澳通行证、其它)', number as '证件号码', birthday as '出生日期' " +
                         "from tourist where guideName like '%" + mGuideName + "%' AND addTime LIKE '%" + mDate + "%'";
+                fileName = "(" + mDate + ")" + mGuideName + " 电子行程单信息.xls";
                 break;
             case TouristExportType.TICKETS:
-                sql = "select addTime as '登记日期', guideName as '导游姓名', peopleName as '姓名', sex as '性别(男、女)', number as '证件号码', birthday as '出生日期' " +
-                        "from tourist where guideName like '%" + mGuideName + "%' AND addTime LIKE '%" + mDate + "%'";
+                sql = "select ticketType as '门票名称', documentType as '证件类型', number as '证件号', peopleName as '姓名'" +
+                        "from tourist where guideName like '%" + mGuideName + "%' AND addTime LIKE '%" + mDate + "%' AND documentType NOT LIKE '% 免票 %'";
+                fileName = "(" + mDate + ")" + mGuideName + " 八达岭门票信息.xls";
                 break;
             default:
                 break;
@@ -81,7 +84,7 @@ public class ExcelActivity extends AppCompatActivity implements View.OnClickList
                 .setSQL(sql)
 //                .setTables(table1, table2) //可选, 如果不设置，则默认导出全部表。
                 .setOutputPath(filePath) //可选, 如果不设置，默认输出路径为 app ExternalFilesDir。
-                .setOutputFileName("(" + mDate + ")" + mGuideName + " 游客信息.xls") //可选, 如果不设置，输出的文件名为 xxx.db.xls。
+                .setOutputFileName(fileName) //可选, 如果不设置，输出的文件名为 xxx.db.xls。
 //                .setEncryptKey("1234567") //可选，可对导出的文件进行加密。
 //                .setProtectKey("9876543") //可选，可对导出的表格进行只读的保护。
                 .start(new SQLiteToExcel.ExportListener() {

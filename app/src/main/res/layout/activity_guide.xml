@@ -34,7 +34,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="@string/none_tourist"
+        android:text="@string/none_guide"
         android:textAlignment="center" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
