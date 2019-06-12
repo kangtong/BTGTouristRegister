@@ -67,7 +67,7 @@ public class ExcelActivity extends AppCompatActivity implements View.OnClickList
             case TouristExportType.TICKETS:
                 sql = "select ticketType as '门票名称', documentType as '证件类型', number as '证件号', peopleName as '姓名'" +
                         "from tourist where guideName like '%" + mGuideName + "%' AND addTime LIKE '%" + mDate + "%' AND documentType NOT LIKE '% 免票 %'";
-                fileName = "(" + mDate + ")" + mGuideName + " 八达岭门票信息.xls";
+                fileName = "(" + mDate + ")" + mGuideName + " 八达岭门票信息.xlsx";
                 break;
             default:
                 break;
