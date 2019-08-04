@@ -77,7 +77,8 @@ public class TouristActivity extends AppCompatActivity implements Handler.Callba
     private TextView mTextNumber;
     private ToggleButton mTbnAutoRead;
 
-
+    Timer timer;
+    TimerTask timerTask;
     //下面是关于读卡的内容
     private TextView mTextSex;
     private TextView mTextBirthday;
@@ -150,10 +151,10 @@ public class TouristActivity extends AppCompatActivity implements Handler.Callba
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
                     btnRead.setEnabled(false);
-                    timer.schedule(timerTask, 3000, 4000);
+                    startTimer();
                 } else {
                     btnRead.setEnabled(true);
-                    timer.cancel();
+                    stopTimer();
                 }
             }
         });
@@ -170,6 +171,33 @@ public class TouristActivity extends AppCompatActivity implements Handler.Callba
         listTourist.setAdapter(mAdapter);
     }
 
+    private void startTimer() {
+        if (timer == null) {
+            timer = new Timer();
+        }
+        if (timerTask == null) {
+            timerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    onReadCard();
+                }
+            };
+        }
+        if (timer != null && timerTask != null) {
+            timer.schedule(timerTask, 3000, 4000);
+        }
+    }
+
+    private void stopTimer() {
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
+        if (timerTask != null) {
+            timerTask.cancel();
+            timerTask = null;
+        }
+    }
     private void setupList() {
         List<Tourist> touristList = LitePal.where("guideName=? AND addTime=?", guideName, DateUtil.formatDate(new Date())).order("id desc").find(Tourist.class);
         touristString.clear();
