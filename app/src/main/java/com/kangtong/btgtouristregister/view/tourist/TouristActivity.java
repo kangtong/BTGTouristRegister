@@ -190,7 +190,7 @@ public class TouristActivity extends AppCompatActivity implements Handler.Callba
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mProgressDialog.setIcon(android.R.drawable.ic_dialog_info);
         mProgressDialog.setIndeterminate(false);
-        mProgressDialog.setCancelable(false);
+        mProgressDialog.setCancelable(true);
     }
 
     private void showProgressDialog(String title, String message) {
@@ -292,6 +292,8 @@ public class TouristActivity extends AppCompatActivity implements Handler.Callba
                 mProgressDialog.setTitle(info[0]);
                 mProgressDialog.setMessage(info[1]);
                 mProgressDialog.show();
+
+
                 result = true;
                 break;
             }
