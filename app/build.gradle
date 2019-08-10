@@ -14,13 +14,16 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
-
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
+    }
+    sourceSets {
+        main.jniLibs.srcDirs = ['libs']
     }
     compileOptions {
         sourceCompatibility = '1.8'
@@ -51,7 +54,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.2-alpha02'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0-alpha02'
-    implementation files('libs/HsSerialProt.jar')
     implementation files('libs/AraBMApiDev.jar')
     implementation files('libs/AraBMApiFp.jar')
     implementation files('libs/AraBMApiIccard.jar')
@@ -62,4 +64,5 @@ dependencies {
     implementation files('libs/gson-2.2.4.jar')
     implementation files('libs/ksoap2-android-assembly-3.0.0-jar-with-dependencies.jar')
     implementation files('src/main/assets/classes.jar')
+    implementation files('libs\\100P.jar')
 }

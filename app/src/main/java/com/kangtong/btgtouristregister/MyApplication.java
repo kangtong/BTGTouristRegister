@@ -2,8 +2,6 @@ package com.kangtong.btgtouristregister;
 
 import android.content.Context;
 
-import androidx.multidex.MultiDex;
-
 import com.tencent.bugly.Bugly;
 
 import org.litepal.LitePalApplication;
@@ -22,7 +20,6 @@ public class MyApplication extends LitePalApplication {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        MultiDex.install(this);
     }
 
 }

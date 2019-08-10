@@ -2,13 +2,10 @@ package com.kangtong.btgtouristregister.view.guide;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.IPowerManager;
 import android.os.Message;
-import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemClock;
 import android.widget.Button;
@@ -16,15 +13,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.huashi.serialport.sdk.HsSerialPortSDK;
-import com.huashi.serialport.sdk.IDCardInfo;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.hs.cvr_100p550im.sdk.CVR_Utility;
+import com.hs.cvr_100p550im.sdk.HsSerialPortSDK;
+import com.hs.cvr_100p550im.sdk.IDCardInfo;
 import com.kangtong.btgtouristregister.R;
 import com.kangtong.btgtouristregister.model.Guide;
-import com.kangtong.btgtouristregister.util.HsUtlis;
 
-import java.io.IOException;
-
-import androidx.appcompat.app.AppCompatActivity;
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.FlowableOnSubscribe;
@@ -55,6 +51,7 @@ public class AddGuideActivity extends AppCompatActivity implements Handler.Callb
     // 正在读卡
     private Disposable reading = null;
     private IPowerManager mPower;
+    private CVR_Utility cvrHelp;
 
     // 读卡
     private FlowableOnSubscribe<IDCardInfo> mReadCardObs = emitter -> {
@@ -82,6 +79,13 @@ public class AddGuideActivity extends AppCompatActivity implements Handler.Callb
         setupRead();
         setupSaveInfo();
         setupLoading();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        cvrHelp = new CVR_Utility();
+
     }
 
     private void setupView() {
@@ -135,44 +139,36 @@ public class AddGuideActivity extends AppCompatActivity implements Handler.Callb
             @Override
             public void run() {
                 super.run();
-
-                int version = Build.VERSION.SDK_INT;
-                if (version == 22) {
-                    try {
-                        mPower.SetCardPower(1);
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    try {
-                        HsUtlis.IDCardPonwer1();
-                    } catch (IOException e) {
-                        toast("上电失败");
-                        return;
-                    }
-                }
-
+                cvrHelp.IDCardPonwer();
                 if (sdk == null) {
                     try {
                         sdk = new HsSerialPortSDK(AddGuideActivity.this);
                         showProgressDialog("正在加载", "设备正在准备,请稍后……");
                     } catch (Exception e) {
-                        toast("初始化失败");
+                        showProgressDialog("初始化失败", "");
+                        return;
                     } finally {
-                        SystemClock.sleep(1500);
-                        filepath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/wltlib";// 授权目录
+                        SystemClock.sleep(1000);
                         int ret = sdk.init("/dev/ttyMT1", 115200, 0);
                         if (ret == 0) {
+                            SystemClock.sleep(1500);
                             toast("身份证模块准备成功");
+                            // tv_sam.setText("SAM号:"+SAM);
+                            // Toast.makeText(IDCardActivity.this,"身份证模块准备成功"+SAM,Toast.LENGTH_LONG).show();
                         } else {
                             toast("身份证模块准备失败");
+                            Toast.makeText(AddGuideActivity.this, "身份证模块准备失败", Toast.LENGTH_LONG).show();
                         }
-                        dismissProgressDialog();
+                        //dismissProgressDialog();
+
                     }
+                } else {
+                    return;
                 }
             }
         }.start();
     }
+
 
     /**
      * 开始读卡

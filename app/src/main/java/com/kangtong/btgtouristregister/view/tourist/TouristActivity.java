@@ -26,8 +26,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.huashi.serialport.sdk.HsSerialPortSDK;
-import com.huashi.serialport.sdk.IDCardInfo;
+import com.hs.cvr_100p550im.sdk.HsSerialPortSDK;
+import com.hs.cvr_100p550im.sdk.IDCardInfo;
 import com.kangtong.btgtouristregister.R;
 import com.kangtong.btgtouristregister.model.Tourist;
 import com.kangtong.btgtouristregister.util.DateUtil;
@@ -38,10 +38,13 @@ import com.kangtong.btgtouristregister.view.util.ChooseDialog;
 import org.litepal.LitePal;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -100,10 +103,10 @@ public class TouristActivity extends AppCompatActivity implements Handler.Callba
                 emitter.onNext(ic);
                 emitter.onComplete();
             } else {
-                emitter.onError(new Throwable());
+                emitter.tryOnError(new Throwable());
             }
         } else {
-            emitter.onError(new Throwable("对卡失败,请先把卡拿开,再重新读取!"));
+            emitter.tryOnError(new Throwable("对卡失败,请先把卡拿开,再重新读取!"));
         }
     };
 
@@ -375,7 +378,14 @@ public class TouristActivity extends AppCompatActivity implements Handler.Callba
         setupList();
     }
 
-    private String getType(Date birthDay, String idcard) {
+    private String getType(String birth, String idcard) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+        Date birthDay = null;
+        try {
+            birthDay = formatter.parse(birth);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         Calendar calendar = Calendar.getInstance();
         calendar.roll(Calendar.YEAR, -6);
         Date child = calendar.getTime();

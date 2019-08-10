@@ -1,14 +1,7 @@
 package com.kangtong.btgtouristregister.model;
 
-import android.annotation.SuppressLint;
-
-import com.kangtong.btgtouristregister.util.DateUtil;
-
 import org.jetbrains.annotations.NotNull;
 import org.litepal.crud.LitePalSupport;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class IDCard extends LitePalSupport {
     private String peopleName;//姓名
@@ -57,8 +50,8 @@ public class IDCard extends LitePalSupport {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
-        this.birthday = DateUtil.formatDate(birthday);
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
     public String getAddress() {
